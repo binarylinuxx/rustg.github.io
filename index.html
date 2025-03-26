@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rustG Widget System Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/ashes.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-red: #ff3860;
+            --text-primary: #f8f8f8;
+            --text-secondary: #a0a0a0;
+            --code-bg: #2d2d2d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background-color: var(--secondary-bg);
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid var(--accent-red);
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar nav a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-red);
+            margin: 2rem 0 1rem;
+        }
+
+        .widget-example {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .property-table th,
+        .property-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--accent-red);
+            text-align: left;
+        }
+
+        .property-table th {
+            background-color: var(--secondary-bg);
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        pre code {
+            padding: 0;
+            background: none;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--accent-red);
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <nav>
+            <h2>rustG Docs</h2>
+            <ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#widget-types">Widget Types</a></li>
+                <li><a href="#window">Window</a></li>
+                <li><a href="#button">Button</a></li>
+                <li><a href="#dynamic-label">Dynamic Label</a></li>
+                <li><a href="#widgetbox">WidgetBox</a></li>
+                <li><a href="#scripting">Scripting</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <h1>rustG Widget System Documentation</h1>
+        
+        <section id="getting-started">
+            <h2>🚀 Getting Started</h2>
+            <div class="widget-example">
+                <pre><code class="language-rust">
+// Basic configuration example
+widget.window.[main] [
+  anchor=["top", "left", "right", "bottom"]
+  child="header, content, footer"
+  exclusivity="exclusive"
+]
+
+widget.widgetBox.[header] [
+  child="logo, nav_buttons"
+]
+                </code></pre>
+            </div>
+        </section>
+
+        <section id="widget-types">
+            <h2>🔌 Widget Types</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Window</h3>
+                    <p>Root container with anchoring system</p>
+                    <code>widget.window.[name]</code>
+                </div>
+                <div class="feature-card">
+                    <h3>Button</h3>
+                    <p>Interactive element with script execution</p>
+                    <code>widget.button.[name]</code>
+                </div>
+                <div class="feature-card">
+                    <h3>Dynamic Label</h3>
+                    <p>Auto-updating text from scripts</p>
+                    <code>widget.dynamic-label.[name]</code>
+                </div>
+                <div class="feature-card">
+                    <h3>WidgetBox</h3>
+                    <p>Container for organizing child widgets</p>
+                    <code>widget.widgetBox.[name]</code>
+                </div>
+            </div>
+        </section>
+
+        <section id="window">
+            <h2>🪟 Window Configuration</h2>
+            <div class="widget-example">
+                <pre><code class="language-rust">
+widget.window.[main] [
+  anchor=["top", "left", "right", "bottom"]  // Full screen
+  child="toolbar, content_box, status_bar"
+  exclusivity="exclusive"
+]
+                </code></pre>
+            </div>
+
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>anchor</code></td>
+                    <td>Array of positions</td>
+                    <td>Window anchoring points (full screen when all 4)</td>
+                </tr>
+                <tr>
+                    <td><code>child</code></td>
+                    <td>Widget names</td>
+                    <td>Comma-separated list of child widgets</td>
+                </tr>
+                <tr>
+                    <td><code>exclusivity</code></td>
+                    <td>"exclusive"</td>
+                    <td>Window behavior mode</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="button">
+            <h2>🖱️ Button Configuration</h2>
+            <div class="widget-example">
+                <pre><code class="language-rust">
+widget.button.[shutdown] [
+  child="dynamic-label.[shutdown_text]"
+  onclick-event="systemctl poweroff"
+]
+                </code></pre>
+            </div>
+
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>child</code></td>
+                    <td>Widget name</td>
+                    <td>Label or dynamic-label to display</td>
+                </tr>
+                <tr>
+                    <td><code>onclick-event</code></td>
+                    <td>Script path/command</td>
+                    <td>Bash/Python/Rust script to execute</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="dynamic-label">
+            <h2>🔄 Dynamic Label</h2>
+            <div class="widget-example">
+                <pre><code class="language-rust">
+widget.dynamic-label.[time_display] [
+  script-path="~/scripts/get_time.py"
+  update-timing="1"
+]
+                </code></pre>
+            </div>
+
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>script-path</code></td>
+                    <td>File path</td>
+                    <td>Script to execute (Bash/Python/Rust)</td>
+                </tr>
+                <tr>
+                    <td><code>update-timing</code></td>
+                    <td>Seconds</td>
+                    <td>Update interval in seconds</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="widgetbox">
+            <h2>📦 WidgetBox Container</h2>
+            <div class="widget-example">
+                <pre><code class="language-rust">
+widget.widgetBox.[status_bar] [
+  child="network_status, cpu_usage, battery_level"
+]
+                </code></pre>
+            </div>
+
+            <table class="property-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>child</code></td>
+                    <td>Widget names</td>
+                    <td>Space-separated list of child widgets</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="scripting">
+            <h2>📜 Scripting Guide</h2>
+            <div class="feature-card">
+                <h3>Supported Languages</h3>
+                <ul>
+                    <li>Bash/Zsh scripts (.sh)</li>
+                    <li>Python scripts (.py)</li>
+                    <li>Rust binaries (.rs)</li>
+                </ul>
+            </div>
+
+            <div class="widget-example">
+                <pre><code class="language-bash">
+#!/bin/bash
+# Example script for dynamic label
+date +"%H:%M:%S"
+                </code></pre>
+            </div>
+        </section>
+    </main>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+    </script>
+</body>
+</html>
